@@ -21,8 +21,9 @@ class QrisPaymentScreen extends StatefulWidget {
 
 class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
   late MenuItem _item;
-  int _secondsRemaining = 298; // 04:58
+  int _secondsRemaining = 245; // Mulai dari 04:05 (hitung mundur ke 04:00)
   Timer? _timer;
+  bool _hasTriggeredSuccess = false;
 
   @override
   void initState() {
@@ -37,6 +38,12 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
         setState(() {
           _secondsRemaining--;
         });
+        // Ketika countdown mencapai 4 menit (04:00), otomatis munculkan pop up pembayaran berhasil
+        if (_secondsRemaining <= 240 && !_hasTriggeredSuccess) {
+          _hasTriggeredSuccess = true;
+          _timer?.cancel();
+          _onPaymentSuccess();
+        }
       } else {
         _timer?.cancel();
       }
@@ -55,21 +62,16 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
     return '$minutes:$seconds';
   }
 
-  void _simulatePaymentSuccess() {
-    _timer?.cancel();
+  void _onPaymentSuccess() {
+    if (!mounted) return;
     ActiveOrder.start(_item); // pesanan mulai dimasak
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => PaymentSuccessScreen(item: _item),
-      ),
-    );
+    PaymentSuccessDialog.show(context, item: _item);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF5F7FB),
       appBar: const HotPayAppBar(
         showBackButton: true,
         showProfile: true,
@@ -345,11 +347,38 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
               ),
               const SizedBox(height: 14),
 
-              // Simulasi pembayaran berhasil -> pindah ke halaman Pembayaran Berhasil
-              CustomButton(
-                text: 'Simulasi Pembayaran Berhasil',
-                trailingIcon: const Icon(Icons.check_circle_rounded, color: Colors.white, size: 18),
-                onPressed: _simulatePaymentSuccess,
+              // Auto-detection status badge (otomatis memverifikasi pembayaran saat countdown 4 menit)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0FDF4),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: const Color(0xFFDCFCE7)),
+                ),
+                child: const Row(
+                  children: [
+                    SizedBox(
+                      width: 14,
+                      height: 14,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.success,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Menunggu pembayaran QRIS... Sistem vending mesin otomatis mendeteksi transaksi Anda.',
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF047857),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
             ],

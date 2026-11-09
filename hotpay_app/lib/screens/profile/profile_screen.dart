@@ -17,7 +17,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   // Warna sesuai desain
-  static const Color _bg = Color(0xFFF5F4FF);
+  static const Color _bg = Color(0xFFF5F7FB);
   static const Color _panel = Color(0xFFEEEDFB);
   static const Color _ink = Color(0xFF1E1B3A);
   static const Color _brown = Color(0xFF5B4A44);

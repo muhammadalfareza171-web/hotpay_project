@@ -42,7 +42,7 @@ class MenuDetailSheet extends StatefulWidget {
 }
 
 class _MenuDetailSheetState extends State<MenuDetailSheet> {
-  int _quantity = 1;
+  final int _quantity = 1;
 
   // Warna sesuai desain
   static const Color _lavender = Color(0xFFF1F0FB);
@@ -51,22 +51,6 @@ class _MenuDetailSheetState extends State<MenuDetailSheet> {
   static const Color _brown = Color(0xFFB45309);
 
   bool get _isSnack => widget.item.category == 'Camilan';
-
-  void _increment() {
-    if (_quantity < widget.item.availablePortions) {
-      setState(() {
-        _quantity++;
-      });
-    }
-  }
-
-  void _decrement() {
-    if (_quantity > 1) {
-      setState(() {
-        _quantity--;
-      });
-    }
-  }
 
   // =====================================================
   // POP UP LIHAT GAMBAR
@@ -461,76 +445,43 @@ class _MenuDetailSheetState extends State<MenuDetailSheet> {
                           ),
                           const SizedBox(height: 12),
 
-                          // Jumlah pesanan
+                          // Porsi Pesanan Mesin Otomatis (1 Porsi)
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 14,
-                              vertical: 10,
+                              vertical: 12,
                             ),
                             decoration: BoxDecoration(
                               color: _lavender,
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Jumlah Pesanan',
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.inventory_2_rounded,
+                                      size: 16,
+                                      color: AppColors.primary,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Jumlah Pesanan',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.textPrimary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  '1 Porsi (Standar Mesin)',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w800,
                                     color: AppColors.textPrimary,
-                                  ),
-                                ),
-                                Container(
-                                  height: 34,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      InkWell(
-                                        onTap: _decrement,
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(6),
-                                          child: Icon(
-                                            Icons.remove,
-                                            size: 16,
-                                            color: AppColors.textMuted,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 28,
-                                        child: Text(
-                                          '$_quantity',
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w800,
-                                            color: AppColors.textPrimary,
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: _increment,
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(6),
-                                          child: Icon(
-                                            Icons.add,
-                                            size: 16,
-                                            color: AppColors.primary,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ),
                               ],

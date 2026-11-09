@@ -19,7 +19,7 @@ class OrderCompletedScreen extends StatelessWidget {
     final foodItem = item ?? MenuItem.sampleMenuItems[2]; // Mie Sagu default
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF5F7FB),
       appBar: const HotPayAppBar(
         showBackButton: false,
         showProfile: true,

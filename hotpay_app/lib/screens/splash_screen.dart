@@ -97,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Container(
             width: double.infinity,
-            color: AuthStyle.header,
+            color: const Color(0xFFF5F7FB),
             child: const SafeArea(
               bottom: false,
               child: Padding(

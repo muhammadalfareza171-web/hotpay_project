@@ -17,7 +17,7 @@ class OrderPreparingScreen extends StatefulWidget {
 
 class _OrderPreparingScreenState extends State<OrderPreparingScreen>
     with TickerProviderStateMixin {
-  static const _pageBg = Color(0xFFF6F5FC);
+  static const _pageBg = Color(0xFFF5F7FB);
   static const _lavender = Color(0xFFE6E5F9);
   static const _peach = Color(0xFFFFE6D8);
 

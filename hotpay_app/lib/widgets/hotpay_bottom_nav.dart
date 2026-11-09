@@ -44,10 +44,13 @@ class HotPayBottomNav extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
+        border: const Border(
+          top: BorderSide(color: Color(0xFFE5E7EB), width: 1),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 12,
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
             offset: const Offset(0, -3),
           ),
         ],
@@ -58,9 +61,9 @@ class HotPayBottomNav extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
-              _item(context, 0, Icons.restaurant_menu_rounded, 'Menu'),
-              _item(context, 1, Icons.soup_kitchen_rounded, 'Pesanan'),
-              _item(context, 2, Icons.receipt_long_rounded, 'Riwayat'),
+              _item(context, 0, Icons.restaurant_rounded, 'Menu'),
+              _item(context, 1, Icons.receipt_long_rounded, 'Pesanan'),
+              _item(context, 2, Icons.history_rounded, 'Riwayat'),
             ],
           ),
         ),
@@ -70,7 +73,7 @@ class HotPayBottomNav extends StatelessWidget {
 
   Widget _item(BuildContext context, int index, IconData icon, String label) {
     final active = index == currentIndex;
-    final color = active ? AppColors.primary : AppColors.textPrimary;
+    final color = active ? AppColors.primary : const Color(0xFF8C93A4);
 
     return Expanded(
       child: InkWell(
@@ -81,12 +84,12 @@ class HotPayBottomNav extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(icon, size: 24, color: color),
-              const SizedBox(height: 2),
+              const SizedBox(height: 3),
               Text(
                 label,
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: active ? FontWeight.w800 : FontWeight.w600,
                   color: color,
                 ),
               ),

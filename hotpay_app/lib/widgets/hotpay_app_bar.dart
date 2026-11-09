@@ -32,33 +32,24 @@ class HotPayAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: 60,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            bottom: BorderSide(color: AppColors.borderLight, width: 1),
-          ),
+          color: Color(0xFFF5F7FB), // Warna seragam menyatu dengan seluruh halaman
         ),
         child: Row(
           children: [
             // Back Button
-            if (showBackButton && canPop)
-              InkWell(
-                onTap: onBack ?? () => Navigator.maybePop(context),
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  width: 38,
-                  height: 38,
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceSecondary,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    size: 16,
-                    color: AppColors.textPrimary,
-                  ),
+            if (showBackButton && canPop) ...[
+              IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_rounded,
+                  size: 24,
+                  color: AppColors.textPrimary,
                 ),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: onBack ?? () => Navigator.maybePop(context),
               ),
+              const SizedBox(width: 12),
+            ],
 
             // Logo or Custom Title
             Expanded(
@@ -89,8 +80,9 @@ class HotPayAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ],
                     )
                   : const HotPayLogo(
-                      iconSize: 22,
-                      fontSize: 17,
+                      iconSize: 24,
+                      fontSize: 18,
+                      showSubtitle: true,
                     ),
             ),
 
@@ -102,10 +94,10 @@ class HotPayAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Navigator.pushNamed(context, '/profile');
                     },
                 child: Container(
-                  width: 38,
-                  height: 38,
+                  width: 36,
+                  height: 36,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFC27838).withValues(alpha: 0.9),
+                    color: const Color(0xFFC27838).withValues(alpha: 0.95),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(

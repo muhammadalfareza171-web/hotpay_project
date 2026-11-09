@@ -16,7 +16,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   // Warna sesuai desain
-  static const Color _bg = Color(0xFFF5F4FF);
+  static const Color _bg = Color(0xFFF5F7FB);
   static const Color _panel = Color(0xFFEEEDFB);
   static const Color _ink = Color(0xFF1E1B3A);
   static const Color _peach = Color(0xFFFFDCC8);

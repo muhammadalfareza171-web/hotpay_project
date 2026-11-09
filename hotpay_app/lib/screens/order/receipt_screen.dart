@@ -18,7 +18,7 @@ class ReceiptScreen extends StatelessWidget {
     final foodItem = item ?? MenuItem.sampleMenuItems[2]; // Mie Sagu default
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: const Color(0xFFF5F7FB),
       appBar: const HotPayAppBar(
         showBackButton: true,
         showProfile: true,

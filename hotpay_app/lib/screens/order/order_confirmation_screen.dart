@@ -9,6 +9,7 @@ import '../../widgets/hotpay_bottom_nav.dart';
 import '../../widgets/app_image.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/status_badge.dart';
+import '../../widgets/error_notification_popup.dart';
 
 class OrderConfirmationScreen extends StatefulWidget {
   final MenuItem? item;
@@ -21,6 +22,7 @@ class OrderConfirmationScreen extends StatefulWidget {
 
 class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
   late MenuItem _item;
+  bool _isQrisSelected = true;
 
   @override
   void initState() {
@@ -31,7 +33,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF5F7FB),
       appBar: const HotPayAppBar(
         showBackButton: true,
         showProfile: true,
@@ -141,17 +143,18 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                           ],
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryLight,
+                            color: const Color(0xFFF3F4F6),
                             borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: const Color(0xFFE5E7EB)),
                           ),
                           child: Text(
                             '${OrderSession.quantity} Porsi',
                             style: const TextStyle(
                               fontSize: 11,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.primary,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -220,8 +223,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                         '🍽️ Siap Santap Cepat',
                                         style: TextStyle(
                                           fontSize: 10,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColors.textSecondary,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black,
                                         ),
                                       ),
                                     ),
@@ -253,8 +256,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                 'Subtotal Ringkasan\n(${OrderSession.quantity} Menu Siap Saji Kios)',
                                 style: const TextStyle(
                                   fontSize: 12,
-                                  color: AppColors.textSecondary,
-                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                               Text(
@@ -262,7 +265,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w800,
-                                  color: AppColors.textPrimary,
+                                  color: Colors.black,
                                 ),
                               ),
                             ],
@@ -295,115 +298,131 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     ),
                     const SizedBox(height: 12),
 
-                    // QRIS Payment Option
-                    Container(
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.primary, width: 1.5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.08),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
+                    // QRIS Payment Option (Interaktif: berubah outline & warna saat dipencet)
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isQrisSelected = !_isQrisSelected;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: _isQrisSelected ? const Color(0xFFFFF9F5) : Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: _isQrisSelected ? AppColors.primary : AppColors.border,
+                            width: _isQrisSelected ? 2.0 : 1.2,
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFFFF2E8),
-                                  borderRadius: BorderRadius.circular(10),
+                          boxShadow: _isQrisSelected
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.primary.withValues(alpha: 0.16),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ]
+                              : AppColors.softShadow,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: _isQrisSelected
+                                        ? const Color(0xFFFFECE0)
+                                        : const Color(0xFFFFF2E8),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Icon(
+                                    Icons.qr_code_scanner_rounded,
+                                    color: AppColors.primary,
+                                    size: 22,
+                                  ),
                                 ),
-                                child: const Icon(
-                                  Icons.qr_code_scanner_rounded,
-                                  color: AppColors.primary,
-                                  size: 22,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          'QRIS Terpadu',
-                                          style: TextStyle(
-                                            fontSize: 14.5,
-                                            fontWeight: FontWeight.w800,
-                                            color: AppColors.textPrimary,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 6),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFDCFCE7),
-                                            borderRadius: BorderRadius.circular(6),
-                                          ),
-                                          child: const Text(
-                                            'Instan',
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'QRIS Terpadu',
                                             style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xFF047857),
+                                              fontSize: 14.5,
+                                              fontWeight: FontWeight.w800,
+                                              color: AppColors.textPrimary,
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Text(
-                                      'Semua E-Wallet & Mobile Banking',
-                                      style: TextStyle(
-                                        fontSize: 11.5,
-                                        color: AppColors.textMuted,
+                                          const SizedBox(width: 6),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFDCFCE7),
+                                              borderRadius: BorderRadius.circular(6),
+                                            ),
+                                            child: const Text(
+                                              'Instan',
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF047857),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Icon(
-                                Icons.radio_button_checked_rounded,
-                                color: AppColors.primary,
-                                size: 22,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: AppColors.surfaceSecondary,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(Icons.info_outline_rounded, size: 14, color: AppColors.textMuted),
-                                SizedBox(width: 6),
-                                Expanded(
-                                  child: Text(
-                                    'Kode QRIS dinamis akan dibuat otomatis setelah konfirmasi dan terhubung langsung ke sistem dispenser mesin.',
-                                    style: TextStyle(
-                                      fontSize: 10.5,
-                                      color: AppColors.textSecondary,
-                                      height: 1.35,
-                                    ),
+                                      const Text(
+                                        'Semua E-Wallet & Mobile Banking',
+                                        style: TextStyle(
+                                          fontSize: 11.5,
+                                          color: AppColors.textMuted,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 10),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: _isQrisSelected
+                                    ? const Color(0xFFFFF2E6)
+                                    : AppColors.surfaceSecondary,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.info_outline_rounded,
+                                    size: 14,
+                                    color: _isQrisSelected ? AppColors.primary : AppColors.textMuted,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  const Expanded(
+                                    child: Text(
+                                      'Kode QRIS dinamis akan dibuat otomatis setelah konfirmasi dan terhubung langsung ke sistem dispenser mesin.',
+                                      style: TextStyle(
+                                        fontSize: 10.5,
+                                        color: AppColors.textSecondary,
+                                        height: 1.35,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -425,6 +444,14 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 text: 'Lanjut ke Pembayaran QRIS',
                 trailingIcon: const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 18),
                 onPressed: () {
+                  if (!_isQrisSelected) {
+                    ErrorNotificationPopup.showNotification(
+                      context,
+                      title: 'Pilih Metode Pembayaran',
+                      message: 'Silakan klik dan aktifkan pembayaran QRIS terlebih dahulu.',
+                    );
+                    return;
+                  }
                   Navigator.pushNamed(context, '/qris-payment', arguments: _item);
                 },
               ),
@@ -443,15 +470,16 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           '• $title',
           style: const TextStyle(
             fontSize: 12,
-            color: AppColors.textMuted,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
           ),
         ),
         Text(
           val,
           style: const TextStyle(
             fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
         ),
       ],

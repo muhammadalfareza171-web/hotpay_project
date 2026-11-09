@@ -53,9 +53,9 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFF5F7FB),
         appBar: const HotPayAppBar(
-          showBackButton: true,
+          showBackButton: false,
           showProfile: true,
         ),
         body: CustomScrollView(
