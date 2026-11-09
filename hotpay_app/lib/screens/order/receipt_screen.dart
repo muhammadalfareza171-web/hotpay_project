@@ -125,8 +125,8 @@ class ReceiptScreen extends StatelessWidget {
                       'Vending Mesin Otomatis Makanan Hangat 24 Jam',
                       style: TextStyle(
                         fontSize: 11,
-                        color: AppColors.textMuted,
-                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -136,8 +136,8 @@ class ReceiptScreen extends StatelessWidget {
                       'TOTAL PEMBAYARAN BERHASIL',
                       style: TextStyle(
                         fontSize: 10.5,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textLight,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black,
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -147,7 +147,7 @@ class ReceiptScreen extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w900,
-                        color: AppColors.textPrimary,
+                        color: Colors.black,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -202,7 +202,7 @@ class ReceiptScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
-                          color: AppColors.textPrimary,
+                          color: Colors.black,
                           letterSpacing: 0.5,
                         ),
                       ),
@@ -240,7 +240,7 @@ class ReceiptScreen extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w800,
-                                      color: AppColors.textPrimary,
+                                      color: Colors.black,
                                     ),
                                   ),
                                   Text(
@@ -248,7 +248,7 @@ class ReceiptScreen extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 13.5,
                                       fontWeight: FontWeight.w800,
-                                      color: AppColors.textPrimary,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ],
@@ -256,16 +256,17 @@ class ReceiptScreen extends StatelessWidget {
                               const SizedBox(height: 2),
                               Text(
                                 'Kuantitas: ${OrderSession.quantity} porsi',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 11,
-                                  color: AppColors.textMuted,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                               const Text(
                                 'Suhu Baki Hangat 85°C | Dispenser Slot: Bay A-02',
                                 style: TextStyle(
                                   fontSize: 10,
-                                  color: AppColors.textLight,
+                                  color: Colors.black,
                                 ),
                               ),
                             ],
@@ -303,7 +304,7 @@ class ReceiptScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
-                            color: AppColors.textPrimary,
+                            color: Colors.black,
                           ),
                         ),
                         Text(
@@ -386,7 +387,8 @@ class ReceiptScreen extends StatelessWidget {
           title,
           style: const TextStyle(
             fontSize: 11.5,
-            color: AppColors.textMuted,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
           ),
         ),
         Row(
@@ -397,13 +399,13 @@ class ReceiptScreen extends StatelessWidget {
               textAlign: TextAlign.right,
               style: const TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
               ),
             ),
             if (isCopyable) ...[
               const SizedBox(width: 4),
-              const Icon(Icons.copy_rounded, size: 13, color: AppColors.textMuted),
+              const Icon(Icons.copy_rounded, size: 13, color: Colors.black54),
             ],
           ],
         ),
@@ -417,11 +419,11 @@ class ReceiptScreen extends StatelessWidget {
       children: [
         Text(
           '• $text',
-          style: const TextStyle(fontSize: 10.5, color: AppColors.textLight),
+          style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: Colors.black),
         ),
         Text(
           badge,
-          style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+          style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700, color: Colors.black),
         ),
       ],
     );
@@ -433,14 +435,14 @@ class ReceiptScreen extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(fontSize: 11.5, color: AppColors.textSecondary),
+          style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: Colors.black),
         ),
         Text(
           val,
           style: TextStyle(
             fontSize: 12,
-            fontWeight: FontWeight.w700,
-            color: valueColor ?? AppColors.textPrimary,
+            fontWeight: FontWeight.w800,
+            color: valueColor ?? Colors.black,
           ),
         ),
       ],

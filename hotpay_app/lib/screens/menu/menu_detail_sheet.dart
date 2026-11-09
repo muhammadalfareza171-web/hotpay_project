@@ -477,7 +477,7 @@ class _MenuDetailSheetState extends State<MenuDetailSheet> {
                                   ],
                                 ),
                                 Text(
-                                  '1 Porsi (Standar Mesin)',
+                                  '1 Porsi',
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w800,

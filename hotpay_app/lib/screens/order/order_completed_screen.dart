@@ -67,7 +67,7 @@ class OrderCompletedScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 12.5,
-                  color: AppColors.textLight,
+                  color: Colors.black,
                   height: 1.4,
                 ),
               ),
@@ -169,7 +169,7 @@ class OrderCompletedScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w800,
-                              color: AppColors.textPrimary,
+                              color: Colors.black,
                             ),
                           ),
                           SizedBox(height: 2),
@@ -177,7 +177,7 @@ class OrderCompletedScreen extends StatelessWidget {
                             'Kompartemen Dispenser: #02\nPintu Vending Mesin telah terbuka otomatis',
                             style: TextStyle(
                               fontSize: 11,
-                              color: AppColors.textSecondary,
+                              color: Colors.black,
                               height: 1.3,
                             ),
                           ),
@@ -224,7 +224,7 @@ class OrderCompletedScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
-                              color: AppColors.textSecondary,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -251,7 +251,7 @@ class OrderCompletedScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
+                            color: Colors.black,
                           ),
                         ),
                         Text(
@@ -259,7 +259,7 @@ class OrderCompletedScreen extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w900,
-                            color: AppColors.textPrimary,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -292,14 +292,14 @@ class OrderCompletedScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.info_outline_rounded, size: 14, color: AppColors.textSecondary),
+                      Icon(Icons.info_outline_rounded, size: 14, color: Colors.black),
                       SizedBox(width: 6),
                       Text(
                         'Ada kendala pada dispenser? Hubungi Bantuan',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.textSecondary,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -320,11 +320,11 @@ class OrderCompletedScreen extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(fontSize: 11.5, color: AppColors.textMuted),
+          style: const TextStyle(fontSize: 11.5, color: Colors.black),
         ),
         Text(
           val,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.black),
         ),
       ],
     );

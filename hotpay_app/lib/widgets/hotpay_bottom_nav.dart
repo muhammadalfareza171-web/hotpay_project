@@ -31,12 +31,16 @@ class HotPayBottomNav extends StatelessWidget {
     }
     if (index == currentIndex) return;
 
-    final route = switch (index) {
-      0 => menuRoute,
-      1 => ordersRoute,
-      _ => historyRoute,
-    };
-    Navigator.pushNamedAndRemoveUntil(context, route, (r) => false);
+    // Semua tab dibuka lewat shell /main (dengan index tab-nya) supaya
+    // bottom nav tetap ada dan sesi login tidak ter-reset.
+    // Catatan: dulu tab Riwayat memakai route '/history' yang tidak terdaftar
+    // di MaterialApp sehingga jatuh ke halaman Splash (terlihat seperti logout).
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      menuRoute,
+      (r) => false,
+      arguments: index,
+    );
   }
 
   @override

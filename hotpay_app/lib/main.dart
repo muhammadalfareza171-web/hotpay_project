@@ -83,6 +83,12 @@ class HotPayApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (_) => OrderCompletedScreen(item: item),
             );
+          case '/history':
+            // Tab Riwayat di dalam shell /main (bukan halaman terpisah),
+            // supaya bottom nav tetap konsisten dan sesi login tidak hilang.
+            return MaterialPageRoute(
+              builder: (_) => const MainNavigationScreen(initialIndex: 2),
+            );
           case '/profile':
             return MaterialPageRoute(builder: (_) => const ProfileScreen());
           case '/help':
