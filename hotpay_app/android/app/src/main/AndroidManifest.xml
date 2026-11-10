@@ -1,13 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- 1. Tambahkan izin internet ini tepat di atas <application> -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-
     <application
         android:label="hotpay_app"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"> <!-- 2. Tambahkan baris ini agar bisa akses http:// lokal -->
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
