@@ -97,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Container(
             width: double.infinity,
-            color: const Color(0xFFF5F7FB),
+            color: AppColors.header, // #EAEDFF opacity 85%
             child: const SafeArea(
               bottom: false,
               child: Padding(

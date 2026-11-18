@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SplashController;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('v1')->group(function () {
+    Route::get('/splash/carousel', [SplashController::class, 'getCarouselData']);
 });

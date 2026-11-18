@@ -8,7 +8,8 @@ import '../../widgets/auth_widgets.dart';
 /// Buka dengan: Navigator.pushNamed(context, '/otp', arguments: nomorHp);
 /// (nomorHp tanpa 0 / +62 di depan, mis. "81234567890")
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  final String? phone;
+  const OtpScreen({super.key, this.phone});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -33,6 +34,10 @@ class _OtpScreenState extends State<OtpScreen>
   @override
   void initState() {
     super.initState();
+    if (widget.phone != null && widget.phone!.trim().isNotEmpty) {
+      _phone = widget.phone!.trim();
+      _argsRead = true;
+    }
     _cursorController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 550),
@@ -45,7 +50,9 @@ class _OtpScreenState extends State<OtpScreen>
     super.didChangeDependencies();
     if (!_argsRead) {
       final args = ModalRoute.of(context)?.settings.arguments;
-      if (args is String) _phone = args;
+      if (args is String && args.trim().isNotEmpty) {
+        _phone = args.trim();
+      }
       _argsRead = true;
     }
   }
@@ -118,10 +125,25 @@ class _OtpScreenState extends State<OtpScreen>
     Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
   }
 
-  String get _maskedPhone {
-    if (_phone.isEmpty) return '+62 -';
-    if (_phone.length >= 7) {
-      return '+62 ${_phone.substring(0, 3)}-xxxx-${_phone.substring(_phone.length - 4)}';
+  String get _displayPhone {
+    if (_phone.trim().isEmpty) return '+62 812-3456-7890';
+    // Format nomor jadi enak dibaca, misal: 812-3456-7890 atau 81234567890 -> +62 812-3456-7890
+    final digits = _phone.replaceAll(RegExp(r'\D'), '');
+    var cleanDigits = digits;
+    if (cleanDigits.startsWith('62')) cleanDigits = cleanDigits.substring(2);
+    if (cleanDigits.startsWith('0')) cleanDigits = cleanDigits.substring(1);
+
+    if (cleanDigits.length >= 10) {
+      final p1 = cleanDigits.substring(0, 3);
+      final p2 = cleanDigits.substring(3, cleanDigits.length - 4);
+      final p3 = cleanDigits.substring(cleanDigits.length - 4);
+      return '+62 $p1-$p2-$p3';
+    } else if (cleanDigits.length >= 7) {
+      final p1 = cleanDigits.substring(0, 3);
+      final p2 = cleanDigits.substring(3);
+      return '+62 $p1-$p2';
+    } else if (cleanDigits.isNotEmpty) {
+      return '+62 $cleanDigits';
     }
     return '+62 $_phone';
   }
@@ -285,7 +307,7 @@ class _OtpScreenState extends State<OtpScreen>
               ),
               const SizedBox(width: 10),
               Text(
-                _maskedPhone,
+                _displayPhone,
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,

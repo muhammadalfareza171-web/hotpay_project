@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'widgets/notification_sheet.dart'; 
 import 'profile_operator_screen.dart'; 
 import 'inventory_screen.dart'; 
@@ -52,12 +53,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
-            backgroundColor: const Color(0xFFF8F9FA),
+            backgroundColor: const Color(0xD9EAEDFF), // #EAEDFF opacity 85%
             pinned: true,
             elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black87),
-              onPressed: () => Navigator.pop(context),
+            automaticallyImplyLeading: false,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Color(0xD9EAEDFF),
+              statusBarIconBrightness: Brightness.dark,
+              statusBarBrightness: Brightness.light,
             ),
             title: Row(
               children: [

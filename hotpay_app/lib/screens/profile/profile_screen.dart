@@ -442,9 +442,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             }
             // Hapus sesi tersimpan supaya tidak auto-login lagi.
             Session.logout();
+            GuestMode.exit();
             Navigator.pushNamedAndRemoveUntil(
               context,
-              '/splash',
+              '/login',
               (route) => false,
             );
           },

@@ -10,7 +10,7 @@ import 'hotpay_logo.dart';
 
 class AuthStyle {
   static const Color bg = Color(0xFFF5F7FB);
-  static const Color header = Color(0xFFF5F7FB); // Warna seragam #F5F7FB sesuai mockup
+  static const Color header = Color(0xD9EAEDFF); // Warna #EAEDFF dengan opacity 85%
   static const Color field = Color(0xFFF3F3FE);
   static const Color tabBg = Color(0xFFE8ECFC);
   static const Color tabBorder = Color(0xFFDDE2F8);
@@ -96,32 +96,39 @@ class AuthHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: const Color(0xFFF5F7FB),
-      child: SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: Row(
-            children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_rounded,
-                  size: 24,
-                  color: AppColors.textPrimary,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AuthStyle.header,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      child: Container(
+        width: double.infinity,
+        color: AuthStyle.header,
+        child: SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    size: 24,
+                    color: AppColors.textPrimary,
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: () => Navigator.maybePop(context),
                 ),
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-                onPressed: () => Navigator.maybePop(context),
-              ),
-              const SizedBox(width: 12),
-              const HotPayLogo(
-                iconSize: 24,
-                fontSize: 18,
-                showSubtitle: true,
-              ),
-            ],
+                const SizedBox(width: 12),
+                const HotPayLogo(
+                  iconSize: 24,
+                  fontSize: 18,
+                  showSubtitle: true,
+                ),
+              ],
+            ),
           ),
         ),
       ),
