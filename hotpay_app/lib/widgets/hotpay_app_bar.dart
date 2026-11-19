@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../core/theme/app_colors.dart';
 import 'hotpay_logo.dart';
 
@@ -27,14 +28,21 @@ class HotPayAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final canPop = Navigator.canPop(context);
 
-    return SafeArea(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.header,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
       child: Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: const BoxDecoration(
-          color: Color(0xFFF5F7FB), // Warna seragam menyatu dengan seluruh halaman
-        ),
-        child: Row(
+        color: AppColors.header, // Membentang penuh ke area status bar (wifi, jam, baterai)
+        child: SafeArea(
+          bottom: false,
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
           children: [
             // Back Button
             if (showBackButton && canPop) ...[
@@ -116,9 +124,12 @@ class HotPayAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-          ],
+            ],
+          ),
         ),
       ),
-    );
-  }
+    ),
+  ),
+);
+}
 }

@@ -10,6 +10,7 @@ class AppColors {
   static const Color primaryDark = Color(0xFFE04B00);
 
   // Background & Surface
+  static const Color header = Color(0xD9EAEDFF); // #EAEDFF dengan opacity 85%
   static const Color background = Color(0xFFF5F7FB);
   static const Color scaffoldBackground = Color(0xFFF5F7FB);
   static const Color surface = Color(0xFFFFFFFF);

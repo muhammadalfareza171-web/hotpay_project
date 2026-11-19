@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../main.dart'; 
 import '../auth/login_screen.dart';
+=======
+import 'package:flutter/services.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import '../auth/login_screen.dart';
+import '../../core/utils/session.dart';
+import '../../core/utils/guest_mode.dart';
+>>>>>>> 0d084d29e3209697e05e0b466e957a49f53193a7
 
 class HomeSplashScreen extends StatefulWidget {
   const HomeSplashScreen({super.key});
@@ -24,16 +32,35 @@ class _HomeSplashScreenState extends State<HomeSplashScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+<<<<<<< HEAD
       body: Container(
         decoration: const BoxDecoration(
+=======
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarColor: Color(0xD9EAEDFF),
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        child: Container(
+          decoration: const BoxDecoration(
+>>>>>>> 0d084d29e3209697e05e0b466e957a49f53193a7
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
+<<<<<<< HEAD
               Color(0xFFE8EEFE), 
               Colors.white,      
             ],
             stops: [0.0, 0.3], 
+=======
+              Color(0xD9EAEDFF), // #EAEDFF opacity 85%
+              Color(0xFFF8F9FD),
+              Colors.white,
+            ],
+            stops: [0.0, 0.25, 0.45],
+>>>>>>> 0d084d29e3209697e05e0b466e957a49f53193a7
           ),
         ),
         child: SafeArea(
@@ -120,7 +147,11 @@ class _HomeSplashScreenState extends State<HomeSplashScreen> {
                                         bottom: 10, left: 10,
                                         child: Row(
                                           children: [
+<<<<<<< HEAD
                                             _buildBadge(Icons.local_fire_department, '85°C Freshly Cooked', Colors.orange),
+=======
+                                            _buildBadge(Icons.local_fire_department, '68°C Freshly Cooked', Colors.orange),
+>>>>>>> 0d084d29e3209697e05e0b466e957a49f53193a7
                                             const SizedBox(width: 6),
                                             _buildBadge(Icons.health_and_safety, '100% Higienis', Colors.green),
                                           ],
@@ -191,7 +222,11 @@ class _HomeSplashScreenState extends State<HomeSplashScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               _buildFeatureCard(Icons.thermostat, '85°C Presisi', 'Suhu Santap\nIdeal', Colors.redAccent),
+<<<<<<< HEAD
                               _buildFeatureCard(Icons.bolt, '180 Detik', 'Tanpa Antre\nLama', Colors.orange),
+=======
+                              _buildFeatureCard(Icons.bolt, '100 Detik', 'Tanpa Antre\nLama', Colors.orange),
+>>>>>>> 0d084d29e3209697e05e0b466e957a49f53193a7
                               _buildFeatureCard(Icons.clean_hands, '100% Higienis', 'Zero Contact\nTech', Colors.teal),
                             ],
                           ),
@@ -245,7 +280,13 @@ class _HomeSplashScreenState extends State<HomeSplashScreen> {
                           // 7. Tautan Bawah
                           TextButton.icon(
                             onPressed: () {
+<<<<<<< HEAD
                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CatalogScreen()));
+=======
+                              Session.loginAsGuest();
+                              GuestMode.enter();
+                              Navigator.pushReplacementNamed(context, '/main');
+>>>>>>> 0d084d29e3209697e05e0b466e957a49f53193a7
                             },
                             icon: const Icon(Icons.manage_search, color: Colors.black87, size: 20),
                             label: const Text(
@@ -263,8 +304,14 @@ class _HomeSplashScreenState extends State<HomeSplashScreen> {
           ),
         ),
       ),
+<<<<<<< HEAD
     );
   }
+=======
+    ),
+  );
+}
+>>>>>>> 0d084d29e3209697e05e0b466e957a49f53193a7
 
   Widget _buildBadge(IconData icon, String text, Color color) {
     return Container(

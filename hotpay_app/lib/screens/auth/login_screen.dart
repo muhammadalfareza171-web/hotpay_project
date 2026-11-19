@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/guest_mode.dart';
 import '../../core/utils/session.dart';
+import '../../core/utils/operator_session.dart';
 import '../../widgets/auth_widgets.dart';
 import 'forgot_password_dialog.dart';
 import 'register_screen.dart';
@@ -40,28 +42,60 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Login TIDAK memakai OTP -> langsung ke halaman utama.
-  void _submit() {
-    final phone = normalizePhone(_phoneController.text);
+  /// Cek apakah nomor sudah pernah daftar (disimpan di SharedPreferences saat register)
+  Future<bool> _isPhoneRegistered(String normalizedPhone) async {
+    final prefs = await SharedPreferences.getInstance();
+    final registered = prefs.getStringList('registered_phones') ?? [];
+    return registered.contains(normalizedPhone);
+  }
+
+  void _submit() async {
+    final rawPhone = _phoneController.text.trim();
+    final phone = normalizePhone(rawPhone);
+    final password = _passwordController.text;
+
     if (!isValidPhone(phone)) {
       showAuthSnack(context, 'Masukkan nomor WhatsApp / HP yang valid');
       return;
     }
-    if (_passwordController.text.isEmpty) {
+    if (password.isEmpty) {
       showAuthSnack(context, 'Kata sandi tidak boleh kosong');
       return;
     }
 
-    // BACKEND: panggil API login di sini; lanjut hanya jika berhasil.
+    // ΓöÇΓöÇ CEK OPERATOR ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    if (OperatorSession.validate(phone, password) ||
+        OperatorSession.validate(rawPhone, password)) {
+      OperatorSession.loginAsOperator();
+      GuestMode.exit();
+      if (!mounted) return;
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/operator-main', (route) => false);
+      return;
+    }
+
+    // ΓöÇΓöÇ CEK CUSTOMER: harus sudah daftar ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    final registered = await _isPhoneRegistered(phone);
+    if (!mounted) return;
+
+    if (!registered) {
+      showAuthSnack(
+        context,
+        'Nomor belum terdaftar. Silakan daftar terlebih dahulu.',
+      );
+      return;
+    }
+
+    // Login customer berhasil
     Session.loginAsUser();
     GuestMode.exit();
     Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
   }
 
-  // Masuk sebagai tamu -> riwayat & pesanan akan terkunci.
+  // Masuk sebagai tamu ΓåÆ riwayat & pesanan akan terkunci.
   void _goAsGuest() {
     Session.loginAsGuest();
-    GuestMode.enter(); // aktifkan mode tamu (aksi terkunci + popup masuk)
+    GuestMode.enter();
     Navigator.pushReplacementNamed(context, '/main');
   }
 
@@ -75,8 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
           Expanded(
             child: SafeArea(
               top: false,
-              // Tidak menggulir jika muat; otomatis bisa digulir saat keyboard
-              // muncul atau layar pendek.
               child: SingleChildScrollView(
                 keyboardDismissBehavior:
                     ScrollViewKeyboardDismissBehavior.onDrag,

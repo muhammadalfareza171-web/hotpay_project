@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/session.dart';
 import '../../widgets/auth_widgets.dart';
@@ -54,6 +55,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return _Strength.medium;
   }
 
+  /// Simpan nomor ke SharedPreferences supaya bisa login nanti.
+  Future<void> _saveRegisteredPhone(String normalizedPhone) async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList('registered_phones') ?? [];
+    if (!list.contains(normalizedPhone)) {
+      list.add(normalizedPhone);
+      await prefs.setStringList('registered_phones', list);
+    }
+  }
+
   void _submit() {
     final name = _nameController.text.trim();
     final phone = normalizePhone(_phoneController.text);
@@ -84,8 +95,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // BACKEND: kirim data pendaftaran + minta server mengirim OTP ke WhatsApp.
     // Hanya alur DAFTAR yang melewati OTP. Nomor dikirim ke layar OTP.
     //
-    // Pengguna daftar = pengguna akun (bukan tamu). Jika Anda ingin status
-    // ini diset setelah OTP berhasil, pindahkan baris ini ke layar OTP.
+    // Simpan nomor yang sudah daftar agar bisa login nanti.
+    _saveRegisteredPhone(phone);
     Session.loginAsUser();
     Navigator.pushNamed(context, '/otp', arguments: phone);
   }

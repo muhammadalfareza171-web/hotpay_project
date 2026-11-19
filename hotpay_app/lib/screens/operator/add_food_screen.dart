@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AddFoodScreen extends StatefulWidget {
   const AddFoodScreen({super.key});
@@ -17,60 +18,62 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFF2F4FE), Color(0xFFF8F9FA)],
-            stops: [0.0, 0.1],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // ==========================================
-              // 1. App Bar
-              // ==========================================
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back_rounded, color: Colors.black87),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Image.asset('assets/images/logo.jpeg', height: 32, errorBuilder: (c, e, s) => const Icon(Icons.local_fire_department, color: Colors.orange, size: 32)),
-                    const SizedBox(width: 8),
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text('HotPay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF1E1E2C))),
-                              SizedBox(width: 4),
-                              Icon(Icons.circle, color: Colors.green, size: 8),
-                            ],
-                          ),
-                          Text('STOK MAKANAN', style: TextStyle(fontSize: 9, color: Colors.black54, letterSpacing: 1.2, fontWeight: FontWeight.w800)),
-                        ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Color(0xD9EAEDFF),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FA),
+        body: Column(
+          children: [
+            // ==========================================
+            // 1. App Bar Dengan Header Menyatu Penuh
+            // ==========================================
+            Container(
+              color: const Color(0xD9EAEDFF),
+              child: SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back_rounded, color: Colors.black87),
+                        onPressed: () => Navigator.pop(context),
                       ),
-                    ),
-                    const Icon(Icons.notifications_outlined, color: Color(0xFFD84315), size: 28),
-                    const SizedBox(width: 12),
-                    const CircleAvatar(backgroundColor: Color(0xFF8D3B00), radius: 16, child: Icon(Icons.person, color: Colors.white, size: 18)),
-                  ],
+                      Image.asset('assets/images/logo.jpeg', height: 32, errorBuilder: (c, e, s) => const Icon(Icons.local_fire_department, color: Colors.orange, size: 32)),
+                      const SizedBox(width: 8),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text('HotPay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF1E1E2C))),
+                                SizedBox(width: 4),
+                                Icon(Icons.circle, color: Colors.green, size: 8),
+                              ],
+                            ),
+                            Text('TAMBAH MENU BARU', style: TextStyle(fontSize: 9, color: Colors.black54, letterSpacing: 1.2, fontWeight: FontWeight.w800)),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.notifications_outlined, color: Color(0xFFD84315), size: 28),
+                      const SizedBox(width: 12),
+                      const CircleAvatar(backgroundColor: Color(0xFF8D3B00), radius: 16, child: Icon(Icons.person, color: Colors.white, size: 18)),
+                    ],
+                  ),
                 ),
               ),
+            ),
 
-              // ==========================================
-              // 2. Konten Form Scroll
-              // ==========================================
-              Expanded(
-                child: SingleChildScrollView(
+            // ==========================================
+            // 2. Konten Form Scroll
+            // ==========================================
+            Expanded(
+              child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
                   child: Column(
@@ -452,9 +455,8 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
 
   // --- WIDGET HELPER KHUSUS FORM ---
   

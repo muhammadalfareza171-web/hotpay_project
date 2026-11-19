@@ -1,69 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'inventory_screen.dart';
+import 'revenue_screen.dart';
+import '../../core/utils/operator_session.dart';
+import '../../core/utils/session.dart';
+import '../../core/utils/guest_mode.dart';
 
 class ProfileOperatorScreen extends StatelessWidget {
   const ProfileOperatorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      body: Container(
-        // Gradient background biru lembut ke putih seperti di Figma
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFF2F4FE), Color(0xFFF8F9FA)],
-            stops: [0.0, 0.3],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // ==========================================
-              // 1. App Bar
-              // ==========================================
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back_rounded, color: Colors.black87),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Image.asset('assets/images/logo.jpeg', height: 32, errorBuilder: (c, e, s) => const Icon(Icons.local_fire_department, color: Colors.orange, size: 32)),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text('HotPay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF1E1E2C))),
-                              const SizedBox(width: 4),
-                              Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFF00C853), shape: BoxShape.circle)),
-                            ],
-                          ),
-                          const Text('PROFILE OPERATOR', style: TextStyle(fontSize: 9, color: Colors.black54, letterSpacing: 1.2, fontWeight: FontWeight.w800)),
-                        ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Color(0xD9EAEDFF),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FA),
+        body: Column(
+          children: [
+            // ==========================================
+            // 1. App Bar Dengan Header Menyatu Penuh
+            // ==========================================
+            Container(
+              color: const Color(0xD9EAEDFF),
+              child: SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back_rounded, color: Colors.black87),
+                        onPressed: () => Navigator.pop(context),
                       ),
-                    ),
-                    const Icon(Icons.notifications_outlined, color: Color(0xFFD84315), size: 28),
-                    const SizedBox(width: 12),
-                    const CircleAvatar(
-                      backgroundColor: Color(0xFF8D3B00),
-                      radius: 16,
-                      child: Icon(Icons.person, color: Colors.white, size: 18),
-                    ),
-                  ],
+                      Image.asset('assets/images/logo.jpeg', height: 32, errorBuilder: (c, e, s) => const Icon(Icons.local_fire_department, color: Colors.orange, size: 32)),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Text('HotPay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF1E1E2C))),
+                                const SizedBox(width: 4),
+                                Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFF00C853), shape: BoxShape.circle)),
+                              ],
+                            ),
+                            const Text('PROFILE OPERATOR', style: TextStyle(fontSize: 9, color: Colors.black54, letterSpacing: 1.2, fontWeight: FontWeight.w800)),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.notifications_outlined, color: Color(0xFFD84315), size: 28),
+                      const SizedBox(width: 12),
+                      const CircleAvatar(
+                        backgroundColor: Color(0xFF8D3B00),
+                        radius: 16,
+                        child: Icon(Icons.person, color: Colors.white, size: 18),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+            ),
 
-              // ==========================================
-              // 2. Konten Utama
-              // ==========================================
-              Expanded(
-                child: SingleChildScrollView(
+            // ==========================================
+            // 2. Konten Utama
+            // ==========================================
+            Expanded(
+              child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
                   child: Column(
@@ -212,7 +219,14 @@ class ProfileOperatorScreen extends StatelessWidget {
                               iconBg: const Color(0xFFFFF0E5),
                               title: 'Form Edit & Tambah Menu',
                               subtitle: 'Edit dan tambah menu baru',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const InventoryScreen(),
+                                  ),
+                                );
+                              },
                             ),
                             const Padding(padding: EdgeInsets.symmetric(horizontal: 16.0), child: Divider(height: 1, thickness: 1, color: Color(0xFFF3F4F6))),
                             _buildListMenu(
@@ -221,7 +235,14 @@ class ProfileOperatorScreen extends StatelessWidget {
                               iconBg: const Color(0xFFE8EEFE),
                               title: 'Laporan Pendapatan',
                               subtitle: 'pembayaran QRIS & status dispense gagal',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const RevenueScreen(),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -231,8 +252,15 @@ class ProfileOperatorScreen extends StatelessWidget {
                       // --- TOMBOL LOGOUT ---
                       ElevatedButton(
                         onPressed: () {
-                          // Aksi Keluar Akun
-                          Navigator.pop(context);
+                          // Aksi Keluar Akun Operator -> Kembali ke Welcome/Login
+                          OperatorSession.logout();
+                          Session.logout();
+                          GuestMode.exit();
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/home-splash',
+                            (route) => false,
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFFEBEE), // Background merah muda
@@ -269,9 +297,8 @@ class ProfileOperatorScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
 
   // Widget Helper untuk List Menu (Alat & Manajemen)
   Widget _buildListMenu({

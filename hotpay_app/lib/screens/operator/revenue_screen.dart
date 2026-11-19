@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dashboard_screen.dart';
 import 'inventory_screen.dart';
 import 'widgets/notification_sheet.dart';
@@ -48,68 +49,70 @@ class _RevenueScreenState extends State<RevenueScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFF2F4FE), Color(0xFFF8F9FA)],
-            stops: [0.0, 0.15],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // ==========================================
-              // 1. App Bar
-              // ==========================================
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back_rounded, color: Colors.black87),
-                      onPressed: () => Navigator.pushReplacement(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const DashboardScreen(), transitionDuration: Duration.zero)),
-                    ),
-                    Image.asset('assets/images/logo.jpeg', height: 32, errorBuilder: (c, e, s) => const Icon(Icons.local_fire_department, color: Colors.orange, size: 32)),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text('HotPay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF1E1E2C))),
-                              const SizedBox(width: 4),
-                              Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFF00C853), shape: BoxShape.circle)),
-                            ],
-                          ),
-                          const Text('PENDAPATAN', style: TextStyle(fontSize: 9, color: Colors.black54, letterSpacing: 1.2, fontWeight: FontWeight.w800)),
-                        ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Color(0xD9EAEDFF),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FA),
+        body: Column(
+          children: [
+            // ==========================================
+            // 1. App Bar Dengan Header Menyatu Penuh
+            // ==========================================
+            Container(
+              color: const Color(0xD9EAEDFF),
+              child: SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back_rounded, color: Colors.black87),
+                        onPressed: () => Navigator.pushReplacement(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const DashboardScreen(), transitionDuration: Duration.zero)),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.notifications_outlined, color: Color(0xFFD84315), size: 28),
-                      onPressed: () => showModalBottomSheet(context: context, isScrollControlled: true, backgroundColor: Colors.transparent, builder: (c) => const NotificationSheet()),
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.push(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const ProfileOperatorScreen(), transitionsBuilder: (c, anim, a2, child) => SlideTransition(position: anim.drive(Tween(begin: const Offset(1.0, 0.0), end: Offset.zero).chain(CurveTween(curve: Curves.easeInOut))), child: child))),
-                      child: const CircleAvatar(backgroundColor: Color(0xFF8D3B00), radius: 16, child: Icon(Icons.person, color: Colors.white, size: 18)),
-                    ),
-                  ],
+                      Image.asset('assets/images/logo.jpeg', height: 32, errorBuilder: (c, e, s) => const Icon(Icons.local_fire_department, color: Colors.orange, size: 32)),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Text('HotPay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF1E1E2C))),
+                                const SizedBox(width: 4),
+                                Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFF00C853), shape: BoxShape.circle)),
+                              ],
+                            ),
+                            const Text('PENDAPATAN', style: TextStyle(fontSize: 9, color: Colors.black54, letterSpacing: 1.2, fontWeight: FontWeight.w800)),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.notifications_outlined, color: Color(0xFFD84315), size: 28),
+                        onPressed: () => showModalBottomSheet(context: context, isScrollControlled: true, backgroundColor: Colors.transparent, builder: (c) => const NotificationSheet()),
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.push(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const ProfileOperatorScreen(), transitionsBuilder: (c, anim, a2, child) => SlideTransition(position: anim.drive(Tween(begin: const Offset(1.0, 0.0), end: Offset.zero).chain(CurveTween(curve: Curves.easeInOut))), child: child))),
+                        child: const CircleAvatar(backgroundColor: Color(0xFF8D3B00), radius: 16, child: Icon(Icons.person, color: Colors.white, size: 18)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+            ),
 
-              // ==========================================
-              // 2. Konten Scroll
-              // ==========================================
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-                  child: Column(
+            // ==========================================
+            // 2. Konten Scroll
+            // ==========================================
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+                child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // --- HEADER & SINKRONISASI ---
@@ -280,33 +283,32 @@ class _RevenueScreenState extends State<RevenueScreen> {
               ),
             ],
           ),
+          
+          // ==========================================
+          // 3. Bottom Navigation Bar
+          // ==========================================
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: 2, // 2 Menandakan Tab "Pendapatan" aktif
+            selectedItemColor: const Color(0xFFD84315),
+            unselectedItemColor: Colors.black54,
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            unselectedLabelStyle: const TextStyle(fontSize: 11),
+            onTap: (index) {
+              if (index == 0) {
+                Navigator.pushReplacement(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const DashboardScreen(), transitionDuration: Duration.zero));
+              } else if (index == 1) {
+                Navigator.pushReplacement(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const InventoryScreen(), transitionDuration: Duration.zero));
+              }
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
+              BottomNavigationBarItem(icon: Icon(Icons.inventory_2_outlined), label: 'Stok'),
+              BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Pendapatan'),
+            ],
+          ),
         ),
-      ),
-      
-      // ==========================================
-      // 3. Bottom Navigation Bar
-      // ==========================================
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // 2 Menandakan Tab "Pendapatan" aktif
-        selectedItemColor: const Color(0xFFD84315),
-        unselectedItemColor: Colors.black54,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-        unselectedLabelStyle: const TextStyle(fontSize: 11),
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.pushReplacement(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const DashboardScreen(), transitionDuration: Duration.zero));
-          } else if (index == 1) {
-            Navigator.pushReplacement(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const InventoryScreen(), transitionDuration: Duration.zero));
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
-          BottomNavigationBarItem(icon: Icon(Icons.inventory_2_outlined), label: 'Stok'),
-          BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Pendapatan'),
-        ],
-      ),
-    );
-  }
+      );
+    }
 
   // --- WIDGET HELPER ---
 

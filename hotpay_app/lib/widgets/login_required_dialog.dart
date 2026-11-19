@@ -15,8 +15,7 @@ class LoginRequiredDialog extends StatelessWidget {
   const LoginRequiredDialog({super.key});
 
   /// Route tujuan saat menekan "Masuk ke Akun HotPay".
-  /// SESUAIKAN dengan route login / halaman awal di MaterialApp kamu.
-  static const String loginRoute = '/splash';
+  static const String loginRoute = '/login';
 
   static bool _showing = false;
 

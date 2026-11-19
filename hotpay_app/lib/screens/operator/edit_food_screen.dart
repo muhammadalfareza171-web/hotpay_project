@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dashboard_screen.dart';
 import 'revenue_screen.dart';
 import 'widgets/notification_sheet.dart';
@@ -22,65 +23,67 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFF2F4FE), Color(0xFFF8F9FA)],
-            stops: [0.0, 0.1],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // ==========================================
-              // 1. App Bar
-              // ==========================================
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back_rounded, color: Colors.black87),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Image.asset('assets/images/logo.jpeg', height: 32, errorBuilder: (c, e, s) => const Icon(Icons.local_fire_department, color: Colors.orange, size: 32)),
-                    const SizedBox(width: 8),
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text('HotPay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF1E1E2C))),
-                              SizedBox(width: 4),
-                              Icon(Icons.circle, color: Colors.green, size: 8),
-                            ],
-                          ),
-                          Text('STOK MAKANAN', style: TextStyle(fontSize: 9, color: Colors.black54, letterSpacing: 1.2, fontWeight: FontWeight.w800)),
-                        ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Color(0xD9EAEDFF),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FA),
+        body: Column(
+          children: [
+            // ==========================================
+            // 1. App Bar Dengan Header Menyatu Penuh
+            // ==========================================
+            Container(
+              color: const Color(0xD9EAEDFF),
+              child: SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back_rounded, color: Colors.black87),
+                        onPressed: () => Navigator.pop(context),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.notifications_outlined, color: Color(0xFFD84315), size: 28),
-                      onPressed: () => showModalBottomSheet(context: context, isScrollControlled: true, backgroundColor: Colors.transparent, builder: (c) => const NotificationSheet()),
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.push(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const ProfileOperatorScreen(), transitionsBuilder: (c, anim, a2, child) => SlideTransition(position: anim.drive(Tween(begin: const Offset(1.0, 0.0), end: Offset.zero).chain(CurveTween(curve: Curves.easeInOut))), child: child))),
-                      child: const CircleAvatar(backgroundColor: Color(0xFF8D3B00), radius: 16, child: Icon(Icons.person, color: Colors.white, size: 18)),
-                    ),
-                  ],
+                      Image.asset('assets/images/logo.jpeg', height: 32, errorBuilder: (c, e, s) => const Icon(Icons.local_fire_department, color: Colors.orange, size: 32)),
+                      const SizedBox(width: 8),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text('HotPay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF1E1E2C))),
+                                SizedBox(width: 4),
+                                Icon(Icons.circle, color: Colors.green, size: 8),
+                              ],
+                            ),
+                            Text('EDIT MENU MAKANAN', style: TextStyle(fontSize: 9, color: Colors.black54, letterSpacing: 1.2, fontWeight: FontWeight.w800)),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.notifications_outlined, color: Color(0xFFD84315), size: 28),
+                        onPressed: () => showModalBottomSheet(context: context, isScrollControlled: true, backgroundColor: Colors.transparent, builder: (c) => const NotificationSheet()),
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.push(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const ProfileOperatorScreen(), transitionsBuilder: (c, anim, a2, child) => SlideTransition(position: anim.drive(Tween(begin: const Offset(1.0, 0.0), end: Offset.zero).chain(CurveTween(curve: Curves.easeInOut))), child: child))),
+                        child: const CircleAvatar(backgroundColor: Color(0xFF8D3B00), radius: 16, child: Icon(Icons.person, color: Colors.white, size: 18)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+            ),
 
-              // ==========================================
-              // 2. Konten Form Scroll
-              // ==========================================
-              Expanded(
-                child: SingleChildScrollView(
+            // ==========================================
+            // 2. Konten Form Scroll
+            // ==========================================
+            Expanded(
+              child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
                   child: Column(
@@ -372,35 +375,34 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
               ),
             ],
           ),
-        ),
-      ),
 
-      // ==========================================
-      // 3. Bottom Navigation Bar Terintegrasi
-      // ==========================================
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1, 
-        selectedItemColor: const Color(0xFFD84315),
-        unselectedItemColor: Colors.black54,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-        unselectedLabelStyle: const TextStyle(fontSize: 11),
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.pushAndRemoveUntil(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const DashboardScreen(), transitionDuration: Duration.zero), (route) => false);
-          } else if (index == 1) {
-            Navigator.pop(context); // Kembali ke list stok
-          } else if (index == 2) {
-            Navigator.pushAndRemoveUntil(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const RevenueScreen(), transitionDuration: Duration.zero), (route) => false);
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
-          BottomNavigationBarItem(icon: Icon(Icons.inventory_2), label: 'Stok'), 
-          BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Pendapatan'),
-        ],
-      ),
-    );
-  }
+          // ==========================================
+          // 3. Bottom Navigation Bar Terintegrasi
+          // ==========================================
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: 1, 
+            selectedItemColor: const Color(0xFFD84315),
+            unselectedItemColor: Colors.black54,
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            unselectedLabelStyle: const TextStyle(fontSize: 11),
+            onTap: (index) {
+              if (index == 0) {
+                Navigator.pushAndRemoveUntil(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const DashboardScreen(), transitionDuration: Duration.zero), (route) => false);
+              } else if (index == 1) {
+                Navigator.pop(context); // Kembali ke list stok
+              } else if (index == 2) {
+                Navigator.pushAndRemoveUntil(context, PageRouteBuilder(pageBuilder: (c, a1, a2) => const RevenueScreen(), transitionDuration: Duration.zero), (route) => false);
+              }
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
+              BottomNavigationBarItem(icon: Icon(Icons.inventory_2), label: 'Stok'), 
+              BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Pendapatan'),
+            ],
+          ),
+        ),
+      );
+    }
 
   // --- WIDGET HELPER ---
   
